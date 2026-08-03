@@ -1,3 +1,5 @@
+// utils/converter/converter.cpp from https://github.com/luca2040/cppUtils
+
 #include "converter.hpp"
 
 #include <string> // yeah this is no duplicated shit. both needed

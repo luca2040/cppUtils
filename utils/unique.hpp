@@ -1,16 +1,18 @@
+// adapted from utils/unique.hpp from https://github.com/luca2040/cppUtils
+
 #pragma once
 
+#include <cstdint>
 #include <string>
-#include <type_traits>
 
 namespace utils
 {
-  template <typename T>
-  class Unique
-  {
+
+template <typename T> class Unique
+{
   private:
     size_t currentValue = 0;
-    T baseVal;
+    T      baseVal;
 
   public:
     Unique() = default;
@@ -18,18 +20,25 @@ namespace utils
 
     T newVal()
     {
-      if constexpr (std::is_same_v<T, size_t>)
-      {
-        return currentValue++;
-      }
-      else if constexpr (std::is_same_v<T, std::string>)
-      {
-        return baseVal + std::to_string(currentValue++);
-      }
-      else
-      {
-        return baseVal + (currentValue++);
-      }
+        if constexpr (std::is_same_v<T, size_t>)
+        {
+            return currentValue++;
+        }
+        else if constexpr (std::is_same_v<T, std::string>)
+        {
+            return baseVal + std::to_string(currentValue++);
+        }
+        else if constexpr (std::is_same_v<T, uintptr_t>)
+        {
+            if (!currentValue) // for some reason value 0 breaks it
+                currentValue++;
+            return currentValue++;
+        }
+        else
+        {
+            return baseVal + (currentValue++);
+        }
     }
-  };
-}
+};
+
+} // namespace utils
